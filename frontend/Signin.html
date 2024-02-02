@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="/css/Signin.css">
+    <script src="/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+    <div class="signin-container">
+        <div class="signin-card">
+            <form id="signin-form">
+                <h2 class="signin-title">Log in</h2>
+                <p class="line"></p>
+                <div class="persontype-question">
+                    <p>Are you a Staff member ?</p>
+                    <input type="checkbox" id="staff-member" class="staff-member-checkbox" checked>
+                    <label for="staff-member">Yes</label>
+                </div>
+                <div class="error-message">
+                    <p id="error-message"></p>
+                </div>
+                <div class="signin-fields">
+                    <label for="admissionId"><b>Admission ID</b></label>
+                    <input class="signin-textbox" type="text" placeholder="Enter Admission ID" name="admissionId"
+                        required>
+                    <label for="password"><b>Password</b></label>
+                    <input class="signin-textbox" type="password" minlength="6" placeholder="Enter Password" name="psw"
+                        required>
+                </div>
+                <button type="submit" class="signin-button">Log In</button>
+                <a class="forget-pass" href="#home">Forgot password?</a>
+            </form>
+            <div class="signup-option">
+                <p class="signup-question">Don't have an account? Contact Librarian</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const signinForm = document.getElementById('signin-form');
+        const errorField = document.getElementById('error-message');
+        const staffMemberCheckbox = document.querySelector('.staff-member-checkbox');
+
+        signinForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const admissionId = document.querySelector('input[name="admissionId"]').value;
+            const password = document.querySelector('input[name="psw"]').value;
+            const isStudent = !staffMemberCheckbox.checked;
+
+            if (isStudent) {
+                $.ajax({
+                    type: "POST",
+                    url: "localhost:5000/api/auth/signin",
+                    data: "{'userType': 'Staff', 'employeeId' : 'mahdi', 'password': '1234567'}",
+                    success: success,
+                    dataType: dataType
+                });
+                // errorField.textContent = admissionId + password + isStudent + 'Student login not implemented';
+            } else {
+                // Handle staff login
+                errorField.textContent = 'Staff login not implemented';
+            }
+        });
+    </script>
+</body>
+
+</html>
