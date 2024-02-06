@@ -7,6 +7,7 @@ import userRoutes from "./routes/users.js";
 import bookRoutes from "./routes/books.js";
 import transactionRoutes from "./routes/transactions.js";
 import categoryRoutes from "./routes/categories.js";
+import commentRoutes from "./routes/comments.js";
 
 /* App Config */
 dotenv.config();
@@ -23,25 +24,26 @@ app.use("/api/users", userRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/comments", commentRoutes);
 
 /* MongoDB connection */
 mongoose.connect(
-  process.env.MONGO_URL,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("MONGODB CONNECTED");
-  }
+    process.env.MONGO_URL,
+    {
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+    () => {
+        console.log("MONGODB CONNECTED");
+    }
 );
 
 app.get("/", (req, res) => {
-  res.status(200).send("Welcome to LibraryApp");
+    res.status(200).send("Welcome to LibraryApp");
 });
 
 /* Port Listening In */
 app.listen(port, () => {
-  console.log(`Server is running in PORT ${port}`);
+    console.log(`Server is running in PORT ${port}`);
 });
